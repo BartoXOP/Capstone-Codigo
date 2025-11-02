@@ -1,0 +1,11 @@
+# Ignorar carpetas innecesarias o con permisos bloqueados
+node_modules
+.vscode
+.git
+.gitignore
+.env
+*.log
+dist
+build
+.expo
+.expo-shared
