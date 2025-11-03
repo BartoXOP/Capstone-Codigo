@@ -8,7 +8,6 @@ import React, { useEffect, useMemo, useState } from 'react';
 import { makeShadow } from '@/utils/shadow';
 import {
   Alert,
-  Image,
   Platform,
   Pressable,
   ScrollView,
@@ -17,6 +16,9 @@ import {
   TouchableHighlight,
   View,
 } from 'react-native';
+// Import using a relative path so Metro resolver finds the file immediately
+import DriverMap from '../../../components/DriverMap';
+import MapboxDriver from '../../../components/MapboxDriver';
 
 interface Hijo {
   id: string;
@@ -334,12 +336,17 @@ export default function PaginaPrincipal() {
         </View>
       )}
 
-      {/* Imagen del mapa */}
+      {/* Mapa del conductor (DriverMap) */}
       <View style={styles.mapaContainer} pointerEvents={listaHijosVisible ? 'none' : 'auto'}>
-        <Image
-          source={require('@/assets/images/mapa-img.jpg')}
-          style={styles.mapaImage}
-          resizeMode="cover"
+        {/* MapboxDriver: usa Mapbox en web/native. Pasa accessToken o configura via env. */}
+        <MapboxDriver
+          accessToken={undefined} /* reemplaza con tu token: process.env.MAPBOX_TOKEN */
+          simulatedPath={[
+            { latitude: -33.4495, longitude: -70.667 },
+            { latitude: -33.4498, longitude: -70.6665 },
+            { latitude: -33.4502, longitude: -70.6660 },
+            { latitude: -33.4506, longitude: -70.6655 },
+          ]}
         />
       </View>
     </View>
