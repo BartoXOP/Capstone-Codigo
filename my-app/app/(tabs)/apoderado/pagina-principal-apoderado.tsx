@@ -1,23 +1,21 @@
 import { db } from '@/firebaseConfig';
 import { useSyncRutActivo } from '@/hooks/use-sync-rut-activo';
+import { makeShadow } from '@/utils/shadow';
 import { Ionicons } from '@expo/vector-icons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Link, useRouter } from 'expo-router';
 import { collection, getDocs, limit, orderBy, query, where } from 'firebase/firestore';
 import React, { useEffect, useMemo, useState } from 'react';
-import { makeShadow } from '@/utils/shadow';
 import {
   Alert,
-  Platform,
   Pressable,
   ScrollView,
   StyleSheet,
   Text,
   TouchableHighlight,
-  View,
+  View
 } from 'react-native';
 // Import using a relative path so Metro resolver finds the file immediately
-import DriverMap from '../../../components/DriverMap';
 import MapboxDriver from '../../../components/MapboxDriver';
 
 interface Hijo {
@@ -340,7 +338,7 @@ export default function PaginaPrincipal() {
       <View style={styles.mapaContainer} pointerEvents={listaHijosVisible ? 'none' : 'auto'}>
         {/* MapboxDriver: usa Mapbox en web/native. Pasa accessToken o configura via env. */}
         <MapboxDriver
-          accessToken={undefined} /* reemplaza con tu token: process.env.MAPBOX_TOKEN */
+          accessToken={process.env.EXPO_PUBLIC_MAPBOX_TOKEN}
           simulatedPath={[
             { latitude: -33.4495, longitude: -70.667 },
             { latitude: -33.4498, longitude: -70.6665 },

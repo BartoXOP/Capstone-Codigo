@@ -1,6 +1,7 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { View, StyleSheet, Text, ActivityIndicator, Animated, Platform, Image } from 'react-native';
 import * as Location from 'expo-location';
+import React, { useEffect, useRef, useState } from 'react';
+import { ActivityIndicator, Animated, Platform, StyleSheet, Text, View } from 'react-native';
+import MapboxDriver from './MapboxDriver';
 
 // Note: react-native-maps is native-only. We avoid importing it at top-level so web builds don't fail.
 // On native platforms we dynamically import the module at runtime.
@@ -118,14 +119,14 @@ export default function DriverMap({ driverLocation, simulatedPath }: Props) {
 
   const route = simulatedPath && simulatedPath.length > 0 ? simulatedPath : [currentLoc];
 
-  // If web, render a simple image fallback (or you can embed Mapbox GL JS here)
+  // If web, use MapboxDriver
   if (isWeb) {
     return (
       <View style={styles.container}>
-        <Image
-          source={require('@/assets/images/mapa-img.jpg')}
-          style={styles.map}
-          resizeMode="cover"
+        <MapboxDriver
+          accessToken={process.env.EXPO_PUBLIC_MAPBOX_TOKEN}
+          driverLocation={currentLoc}
+          simulatedPath={simulatedPath}
         />
         <View style={styles.bottomCard}>
           <Text style={styles.etaText}>15 min</Text>
